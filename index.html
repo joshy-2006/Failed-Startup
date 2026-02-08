@@ -3,99 +3,1115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DevRays Owner App</title>
-    <!-- Tailwind CSS -->
+    <title>Brand पे Analytics</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        body { font-family: 'Poppins', sans-serif; background-color: #f3f4f6; }
-        .card-shadow { box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        /* Professional Helvetica-inspired font stack */
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --primary: #A3E635;
+            --secondary: #ACBFA4;
+            --cream: #E2E8CE;
+            --bg-dark: #0d0d0d;
+            --card-bg: rgba(22, 22, 22, 0.7);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--cream);
+            overflow: hidden;
+        }
+
+        /* Bouncy Background Elements */
+        .bg-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            background: var(--bg-dark);
+        }
+
+        .blob {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(163, 230, 53, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+            border-radius: 50%;
+            filter: blur(100px);
+            animation: bounce 25s infinite alternate ease-in-out;
+        }
+
+        .blob-2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(172, 191, 164, 0.08) 0%, rgba(0, 0, 0, 0) 70%);
+            left: 65%;
+            top: 25%;
+            animation-duration: 30s;
+            animation-delay: -7s;
+        }
+
+        /* Sophisticated Glassmorphism */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(163, 230, 53, 0.1);
+            border-radius: 20px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(163, 230, 53, 0.3);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        .tech-font {
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .glow-text {
+            text-shadow: 0 0 15px rgba(163, 230, 53, 0.3);
+        }
+
+        /* Ribbon Styling */
+        .ribbon-wrapper {
+            background: rgba(163, 230, 53, 0.02);
+            border-y: 1px solid rgba(163, 230, 53, 0.03);
+            height: 32px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .ribbon-content {
+            display: flex;
+            white-space: nowrap;
+            animation: scroll 45s linear infinite;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Line Graph Animation */
+        .line-path {
+            stroke-dasharray: 2000;
+            stroke-dashoffset: 2000;
+            animation: drawLine 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            transition: d 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fill-path {
+            opacity: 0;
+            animation: fadeIn 1.5s ease 1s forwards;
+            transition: d 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes drawLine {
+            to { stroke-dashoffset: 0; }
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 0.12; }
+        }
+
+        /* Switch Animation */
+        .animate-switch {
+            animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(163, 230, 53, 0.1);
+            border-radius: 10px;
+        }
+
+        .platform-btn.active {
+            background-color: var(--primary);
+            color: #0d0d0d;
+            box-shadow: 0 0 10px rgba(163, 230, 53, 0.2);
+        }
+
+        @keyframes bounce {
+            0% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(3vw, 5vh) scale(1.05); }
+            100% { transform: translate(-1vw, -2vh) scale(1); }
+        }
+
+        /* AI Section Styles */
+        .ai-pulse {
+            animation: aiPulse 2s infinite ease-in-out;
+        }
+        @keyframes aiPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Probe Line Styles */
+        #probe-line {
+            transition: transform 0.1s ease-out;
+        }
+
+        /* Transitions for Login Flow */
+        .page-transition {
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .fade-out-up {
+            opacity: 0;
+            transform: scale(1.1) translateY(-20px) filter: blur(10px);
+            pointer-events: none;
+        }
+
+        .fade-in-up {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            pointer-events: auto;
+        }
+
+        .hidden-state {
+            opacity: 0;
+            transform: scale(0.95) translateY(20px);
+            pointer-events: none;
+        }
+
+        /* Input Styles */
+        .login-input {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #E2E8CE;
+            transition: all 0.3s ease;
+        }
+        .login-input:focus {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: #A3E635;
+            outline: none;
+            box-shadow: 0 0 0 1px rgba(163, 230, 53, 0.4);
+        }
+        
+        /* Contact Button Hover */
+        .contact-btn:hover span {
+            text-decoration: underline;
+            text-decoration-color: #A3E635;
+            text-underline-offset: 4px;
+        }
+
+        /* Green Grid Pattern */
+        .bg-grid-pattern {
+            background-image: linear-gradient(rgba(163, 230, 53, 0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(163, 230, 53, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center bg-gray-100">
+<body class="h-screen font-medium text-sm overflow-hidden">
 
-    <!-- Mobile App Container -->
-    <div class="w-full max-w-md bg-white min-h-screen relative shadow-2xl overflow-hidden flex flex-col">
-        
-        <!-- Header -->
-        <header class="bg-gray-900 text-white p-6 rounded-b-3xl shadow-lg z-10">
-            <div class="flex justify-between items-center mb-2">
-                <div>
-                    <p class="text-gray-400 text-sm">Welcome back,</p>
-                    <h1 class="text-2xl font-bold">DevRays Solar</h1>
-                </div>
-                <div class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center">
-                    <i class="fa-solid fa-user text-gray-300"></i>
-                </div>
-            </div>
-            <p class="text-sm opacity-80 mt-2"><i class="fa-solid fa-calendar-day mr-2"></i>Today's Business</p>
-        </header>
-
-        <!-- Main Content Area -->
-        <div class="flex-1 p-6 space-y-4">
-            
-            <!-- Row 1: Calls & WhatsApp -->
-            <div class="grid grid-cols-2 gap-4">
-                <!-- Calls Card -->
-                <div class="bg-blue-50 p-5 rounded-2xl border border-blue-100 card-shadow flex flex-col items-center justify-center text-center">
-                    <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mb-2">
-                        <i class="fa-solid fa-phone text-xl"></i>
-                    </div>
-                    <h2 class="text-4xl font-bold text-gray-800">4</h2>
-                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mt-1">Calls Today</p>
-                </div>
-
-                <!-- WhatsApp Card -->
-                <div class="bg-green-50 p-5 rounded-2xl border border-green-100 card-shadow flex flex-col items-center justify-center text-center">
-                    <div class="w-10 h-10 bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-2">
-                        <i class="fa-brands fa-whatsapp text-xl"></i>
-                    </div>
-                    <h2 class="text-4xl font-bold text-gray-800">7</h2>
-                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mt-1">Enquiries</p>
-                </div>
-            </div>
-
-            <!-- Row 2: Area & Ad Spend -->
-            <div class="grid grid-cols-1 gap-4">
-                <!-- Area Card -->
-                <div class="bg-white p-5 rounded-2xl border border-gray-100 card-shadow flex items-center gap-4">
-                    <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center shrink-0">
-                        <i class="fa-solid fa-location-dot text-xl"></i>
-                    </div>
-                    <div>
-                        <p class="text-gray-400 text-xs font-bold uppercase">Area Reached</p>
-                        <h3 class="text-lg font-bold text-gray-800">Nashik + 15 km</h3>
-                    </div>
-                </div>
-
-                <!-- Ad Spend Card -->
-                <div class="bg-white p-5 rounded-2xl border border-gray-100 card-shadow flex items-center gap-4">
-                    <div class="w-12 h-12 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center shrink-0">
-                        <i class="fa-solid fa-indian-rupee-sign text-xl"></i>
-                    </div>
-                    <div>
-                        <p class="text-gray-400 text-xs font-bold uppercase">Ad Spend Today</p>
-                        <h3 class="text-lg font-bold text-gray-800">₹180</h3>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- THE BIG BUTTON (Footer) -->
-        <div class="p-6 mt-auto bg-white border-t border-gray-100">
-            <button onclick="alert('Going to Screen 2: Lead Mode')" class="w-full bg-yellow-500 hover:bg-yellow-600 text-black font-bold text-lg py-5 rounded-xl shadow-lg shadow-yellow-500/30 flex items-center justify-center gap-3 transition transform active:scale-95">
-                <i class="fa-solid fa-fire text-red-600 animate-pulse"></i>
-                GET MORE SOLAR LEADS
-            </button>
-            <p class="text-center text-xs text-gray-400 mt-3">DevRays Manager v1.0</p>
-        </div>
-
+    <div class="bg-container">
+        <canvas id="interactive-grid" class="absolute inset-0 opacity-25"></canvas>
+        <div class="blob" style="top: 10%; left: 5%;"></div>
+        <div class="blob blob-2" style="bottom: 10%; right: 5%;"></div>
     </div>
 
+    <!-- Login Screen -->
+    <div id="login-container" class="fixed inset-0 z-[60] flex items-center justify-center p-4 page-transition">
+        
+        <!-- Contact Trigger -->
+        <button onclick="toggleContactModal()" class="absolute top-6 right-6 md:top-10 md:right-10 text-[#ACBFA4] hover:text-[#A3E635] text-xs font-bold uppercase tracking-wider transition-colors z-[70] flex items-center gap-2 contact-btn group">
+            <span>Contact Support</span>
+            <div class="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-[#A3E635] group-hover:text-[#0d0d0d] group-hover:border-[#A3E635] transition-all">
+                <i data-lucide="help-circle" class="w-4 h-4"></i>
+            </div>
+        </button>
+
+        <!-- Expanded Login Portal -->
+        <div class="relative w-full max-w-5xl h-auto md:h-[550px] bg-[#0d0d0d]/60 backdrop-blur-xl border border-[#A3E635]/20 rounded-3xl shadow-[0_0_50px_rgba(0,0,0,0.8)] flex flex-col md:flex-row overflow-hidden z-10">
+            <!-- Decorative Inner Backgrounds -->
+            <div class="absolute inset-0 bg-grid-pattern opacity-20 pointer-events-none"></div>
+            <div class="absolute -left-32 -top-32 w-96 h-96 bg-[#A3E635] rounded-full mix-blend-overlay filter blur-[120px] opacity-20 animate-pulse"></div>
+            <div class="absolute -right-32 -bottom-32 w-96 h-96 bg-[#A3E635] rounded-full mix-blend-overlay filter blur-[120px] opacity-20 animate-pulse" style="animation-delay: 2s;"></div>
+
+            <!-- Left Panel: Brand & Stats -->
+            <div class="hidden md:flex w-1/2 p-12 flex-col justify-between relative z-10 border-r border-white/5 bg-black/20">
+                <div>
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#A3E635]/30 bg-[#A3E635]/10 mb-8">
+                        <span class="relative flex h-2 w-2">
+                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#A3E635] opacity-75"></span>
+                          <span class="relative inline-flex rounded-full h-2 w-2 bg-[#A3E635]"></span>
+                        </span>
+                        <span class="text-[10px] font-bold text-[#A3E635] tracking-[0.2em] uppercase">System Operational</span>
+                    </div>
+                    
+                    <h1 class="text-5xl font-bold text-[#E2E8CE] tracking-tighter leading-tight mb-4 glow-text">
+                        Brand <span class="text-[#A3E635]">पे</span> <br> Analytics
+                    </h1>
+                    <p class="text-[#ACBFA4] text-sm leading-relaxed max-w-sm opacity-80">
+                        Unlock enterprise-grade social insights with our next-gen velocity tracking system. Monitor growth in real-time.
+                    </p>
+                </div>
+                
+                <div class="space-y-3">
+                    <div class="flex items-center gap-4 p-3 rounded-2xl bg-white/5 border border-white/5 hover:border-[#A3E635]/30 transition-all group">
+                        <div class="p-2.5 rounded-xl bg-[#A3E635]/10 text-[#A3E635] group-hover:bg-[#A3E635] group-hover:text-[#0d0d0d] transition-colors shadow-[0_0_10px_rgba(163,230,53,0.1)]">
+                            <i data-lucide="layers" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <div class="text-[#E2E8CE] text-xs font-bold uppercase tracking-wider mb-0.5">Multi-Platform Sync</div>
+                            <div class="text-[10px] text-[#ACBFA4] opacity-60">Unified streams for IG, YT, X & FB</div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center gap-4 p-3 rounded-2xl bg-white/5 border border-white/5 hover:border-[#A3E635]/30 transition-all group">
+                        <div class="p-2.5 rounded-xl bg-[#A3E635]/10 text-[#A3E635] group-hover:bg-[#A3E635] group-hover:text-[#0d0d0d] transition-colors shadow-[0_0_10px_rgba(163,230,53,0.1)]">
+                            <i data-lucide="sparkles" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <div class="text-[#E2E8CE] text-xs font-bold uppercase tracking-wider mb-0.5">AI Growth Engine</div>
+                            <div class="text-[10px] text-[#ACBFA4] opacity-60">Gemini-powered strategy synthesis</div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-4 p-3 rounded-2xl bg-white/5 border border-white/5 hover:border-[#A3E635]/30 transition-all group">
+                        <div class="p-2.5 rounded-xl bg-[#A3E635]/10 text-[#A3E635] group-hover:bg-[#A3E635] group-hover:text-[#0d0d0d] transition-colors shadow-[0_0_10px_rgba(163,230,53,0.1)]">
+                            <i data-lucide="activity" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <div class="text-[#E2E8CE] text-xs font-bold uppercase tracking-wider mb-0.5">Real-time Velocity</div>
+                            <div class="text-[10px] text-[#ACBFA4] opacity-60">Live node performance tracking</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel: Login Form -->
+            <div class="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center relative z-10 bg-white/[0.02]">
+                <div class="md:hidden text-center mb-8">
+                    <span class="text-3xl font-bold tracking-tight text-[#E2E8CE]">Brand <span class="text-[#A3E635]">पे</span></span>
+                </div>
+
+                <div class="mb-8">
+                    <h2 class="text-2xl font-bold text-white mb-2">Welcome back</h2>
+                    <p class="text-xs text-[#ACBFA4]">Enter your credentials to access the matrix.</p>
+                </div>
+
+                <div class="space-y-5 mb-8">
+                    <!-- Language Selection -->
+                    <div class="relative w-full">
+                        <select class="w-full bg-[#0d0d0d] border border-white/10 rounded-xl px-4 py-3 text-xs text-[#E2E8CE] appearance-none focus:outline-none focus:border-[#A3E635] transition-colors cursor-pointer font-bold">
+                            <option>English (United States)</option>
+                            <option>Hindi (India)</option>
+                            <option>Spanish (Global)</option>
+                        </select>
+                        <i data-lucide="chevron-down" class="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#ACBFA4] pointer-events-none"></i>
+                    </div>
+
+                    <div class="group">
+                        <div class="relative">
+                            <i data-lucide="mail" class="absolute left-4 top-3.5 w-4 h-4 text-zinc-500 group-focus-within:text-[#A3E635] transition-colors"></i>
+                            <input id="login-email" type="email" placeholder="Access ID / Email" class="login-input w-full rounded-xl py-3 pl-11 pr-4 text-sm placeholder-zinc-600 font-medium">
+                        </div>
+                    </div>
+                    <div class="group">
+                        <div class="relative">
+                            <i data-lucide="lock" class="absolute left-4 top-3.5 w-4 h-4 text-zinc-500 group-focus-within:text-[#A3E635] transition-colors"></i>
+                            <input type="password" placeholder="Passcode" class="login-input w-full rounded-xl py-3 pl-11 pr-4 text-sm placeholder-zinc-600 font-medium">
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="handleLogin()" class="w-full bg-[#A3E635] hover:bg-[#bef264] text-[#0d0d0d] font-bold py-4 rounded-xl shadow-[0_0_20px_rgba(163,230,53,0.3)] active:scale-[0.98] transition-all flex items-center justify-center gap-2 group">
+                    <span class="uppercase tracking-wider text-xs">Initialize Dashboard</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                </button>
+
+                <div class="mt-8 text-center md:hidden">
+                    <p class="text-[9px] text-[#ACBFA4] opacity-30 font-mono tracking-widest">SECURE CONNECTION // ENCRYPTED</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Modal -->
+        <div id="contact-modal" class="absolute inset-0 z-[80] hidden items-center justify-center bg-[#0d0d0d]/95 backdrop-blur-xl animate-switch p-4">
+            <div class="glass-card w-full max-w-lg p-8 border border-[#A3E635]/30 relative shadow-2xl bg-[#0d0d0d]">
+                <div class="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none"></div>
+                
+                <button onclick="toggleContactModal()" class="absolute top-4 right-4 text-[#ACBFA4] hover:text-white transition-colors bg-white/5 p-2 rounded-lg z-20">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+                
+                <div class="mb-6 border-b border-white/5 pb-6 relative z-10">
+                    <h3 class="text-2xl font-bold text-[#E2E8CE] mb-2 flex items-center gap-3">
+                        <div class="p-2 rounded-lg bg-[#A3E635]/20 text-[#A3E635]"><i data-lucide="life-buoy" class="w-6 h-6"></i></div>
+                        Contact Support
+                    </h3>
+                    <p class="text-xs text-[#ACBFA4] opacity-80 pl-1">Reach our technical team for access issues or API integration.</p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 mb-6 relative z-10">
+                    <div class="bg-white/5 p-4 rounded-xl border border-white/5 hover:border-[#A3E635]/30 transition-colors">
+                        <p class="text-[9px] uppercase tracking-widest text-[#ACBFA4] mb-2">Email Support</p>
+                        <p class="text-xs font-bold text-[#A3E635] truncate">failedstartup@gmail.com</p>
+                    </div>
+                    <div class="bg-white/5 p-4 rounded-xl border border-white/5 hover:border-[#A3E635]/30 transition-colors">
+                        <p class="text-[9px] uppercase tracking-widest text-[#ACBFA4] mb-2">24/7 Hotline</p>
+                        <p class="text-xs font-bold text-[#A3E635]">+91 9999123456</p>
+                    </div>
+                </div>
+
+                <form class="space-y-4 relative z-10" onsubmit="event.preventDefault(); toggleContactModal();">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-[10px] uppercase tracking-widest text-[#ACBFA4] mb-1.5 font-bold">Your Name</label>
+                            <input type="text" class="login-input w-full rounded-lg py-2.5 px-3 text-xs focus:ring-0">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] uppercase tracking-widest text-[#ACBFA4] mb-1.5 font-bold">Subject</label>
+                            <input type="text" class="login-input w-full rounded-lg py-2.5 px-3 text-xs focus:ring-0">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] uppercase tracking-widest text-[#ACBFA4] mb-1.5 font-bold">Query Description</label>
+                        <textarea rows="3" class="login-input w-full rounded-lg py-2.5 px-3 text-xs resize-none focus:ring-0" placeholder="Describe your issue..."></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] uppercase tracking-widest text-[#ACBFA4] mb-1.5 font-bold">Attachment</label>
+                        <label class="login-input w-full rounded-lg py-2.5 px-3 text-xs flex items-center justify-between cursor-pointer hover:border-[#A3E635] transition-colors group border-dashed">
+                            <span class="opacity-50 italic group-hover:opacity-80">Upload screenshot or log...</span>
+                            <i data-lucide="paperclip" class="w-3.5 h-3.5 text-[#A3E635]"></i>
+                            <input type="file" class="hidden">
+                        </label>
+                    </div>
+                    <button type="submit" class="w-full bg-[#E2E8CE] text-[#0d0d0d] font-bold py-3.5 rounded-xl mt-2 hover:bg-white transition-colors text-xs uppercase tracking-widest shadow-lg">
+                        Submit Query Ticket
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Dashboard Container (Initially Hidden) -->
+    <div id="dashboard-container" class="flex flex-col md:flex-row h-screen font-medium text-sm hidden-state page-transition absolute inset-0">
+        <!-- Sidebar / Bottom Nav -->
+        <aside class="w-full h-16 md:h-full md:w-20 lg:w-60 bg-[#0d0d0d]/90 backdrop-blur-xl border-t md:border-t-0 md:border-r border-white/5 flex flex-row md:flex-col justify-between items-center md:items-stretch p-0 md:p-4 z-50 order-2 md:order-1 shrink-0">
+            
+            <div class="hidden md:block mt-2 mb-8 px-2 text-center lg:text-left">
+                <span class="text-2xl font-bold tracking-tight text-[#E2E8CE] whitespace-nowrap glow-text">
+                    Brand <span class="text-[#A3E635]">पे</span>
+                </span>
+            </div>
+
+            <nav class="flex flex-row md:flex-col w-full md:w-auto h-full md:h-auto justify-around md:justify-start items-center md:items-stretch md:space-y-2 overflow-y-auto custom-scrollbar md:pr-1">
+                <div class="hidden lg:block px-3 mb-2 text-[10px] font-bold uppercase tracking-widest text-[#ACBFA4] opacity-50">Dashboard</div>
+                
+                <button onclick="switchPlatform('total')" id="btn-total" class="platform-btn active flex-1 md:flex-none flex items-center justify-center md:justify-start gap-3 px-2 md:px-3 py-3 rounded-xl transition-all group h-full md:h-auto border-t-2 border-transparent md:border-t-0">
+                    <i data-lucide="layout-grid" class="w-5 h-5 md:w-4 md:h-4"></i>
+                    <span class="hidden lg:block text-xs font-bold">Total Audience</span>
+                </button>
+                <button onclick="switchPlatform('instagram')" id="btn-instagram" class="platform-btn flex-1 md:flex-none flex items-center justify-center md:justify-start gap-3 px-2 md:px-3 py-3 rounded-xl text-zinc-400 hover:bg-white/5 hover:text-white transition-all group h-full md:h-auto">
+                    <i data-lucide="instagram" class="w-5 h-5 md:w-4 md:h-4"></i>
+                    <span class="hidden lg:block text-xs font-medium">Instagram</span>
+                </button>
+                <button onclick="switchPlatform('youtube')" id="btn-youtube" class="platform-btn flex-1 md:flex-none flex items-center justify-center md:justify-start gap-3 px-2 md:px-3 py-3 rounded-xl text-zinc-400 hover:bg-white/5 hover:text-white transition-all group h-full md:h-auto">
+                    <i data-lucide="youtube" class="w-5 h-5 md:w-4 md:h-4"></i>
+                    <span class="hidden lg:block text-xs font-medium">YouTube</span>
+                </button>
+                <button onclick="switchPlatform('facebook')" id="btn-facebook" class="platform-btn flex-1 md:flex-none flex items-center justify-center md:justify-start gap-3 px-2 md:px-3 py-3 rounded-xl text-zinc-400 hover:bg-white/5 hover:text-white transition-all group h-full md:h-auto">
+                    <i data-lucide="facebook" class="w-5 h-5 md:w-4 md:h-4"></i>
+                    <span class="hidden lg:block text-xs font-medium">Facebook</span>
+                </button>
+                <button onclick="switchPlatform('x')" id="btn-x" class="platform-btn flex-1 md:flex-none flex items-center justify-center md:justify-start gap-3 px-2 md:px-3 py-3 rounded-xl text-zinc-400 hover:bg-white/5 hover:text-white transition-all group h-full md:h-auto">
+                    <i data-lucide="twitter" class="w-5 h-5 md:w-4 md:h-4"></i>
+                    <span class="hidden lg:block text-xs font-medium">X (Twitter)</span>
+                </button>
+            </nav>
+
+            <div class="hidden md:flex mt-auto pt-4 border-t border-white/5">
+            <div class="flex items-center gap-3 p-2 bg-white/5 rounded-xl w-full">
+                <div id="user-profile-initials" class="w-8 h-8 rounded-lg bg-[#E2E8CE] text-[#0d0d0d] flex items-center justify-center text-xs font-black shrink-0">AR</div>
+                <div class="hidden lg:block">
+                    <p id="user-profile-name" class="text-xs font-bold text-white truncate">Alex Rivera</p>
+                    <p class="text-[9px] text-[#A3E635] font-bold tracking-widest uppercase opacity-70">Analytics_Pro</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+        <main class="flex-1 flex flex-col overflow-y-auto custom-scrollbar relative order-1 md:order-2 h-[calc(100vh-4rem)] md:h-screen">
+            
+            <!-- Header -->
+            <header class="h-16 md:h-20 border-b border-white/5 px-4 md:px-8 flex items-center justify-between sticky top-0 bg-[#0d0d0d]/80 backdrop-blur-xl z-40 shrink-0">
+                <div class="flex flex-col gap-0.5 md:gap-1">
+                    <div class="md:hidden text-lg font-bold tracking-tight text-[#E2E8CE] mb-1">
+                        Brand <span class="text-[#A3E635]">पे</span>
+                    </div>
+                    <h1 id="view-title" class="text-xl md:text-2xl font-bold tracking-tight text-[#E2E8CE] transition-all duration-300">Total Audience</h1>
+                    <p class="hidden md:block text-[10px] font-semibold uppercase tracking-[0.2em] text-[#ACBFA4] opacity-70">Performance Tracking System</p>
+                </div>
+                <div class="flex items-center gap-3 md:gap-4">
+                    <div class="hidden md:flex items-center bg-white/5 border border-white/10 rounded-full px-4 py-2 w-64 focus-within:border-[#A3E635]/40 transition-all">
+                        <i data-lucide="search" class="w-4 h-4 text-zinc-500 mr-2"></i>
+                        <input id="global-search" type="text" placeholder="Search metrics..." class="bg-transparent border-none outline-none text-xs w-full text-[#E2E8CE] font-medium placeholder-zinc-500">
+                    </div>
+                    <!-- Mobile Search Icon -->
+                    <button class="md:hidden w-9 h-9 rounded-lg bg-white/5 text-zinc-400 flex items-center justify-center">
+                        <i data-lucide="search" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Main Workspace -->
+            <div class="p-4 md:p-6 space-y-5 md:space-y-6 pb-20 md:pb-6">
+                
+                <!-- KPI Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-5" id="kpi-container">
+                    <!-- Dynamic KPIs -->
+                </div>
+
+                <!-- Graph & AI Section -->
+                <div class="flex flex-col xl:flex-row gap-5 md:gap-6">
+                    <!-- Graph Column -->
+                    <div id="graph-viewport" class="glass-card flex-[0.6] p-4 md:p-6 overflow-hidden relative cursor-crosshair">
+                        <div class="flex items-center justify-between mb-4 md:mb-6">
+                            <div class="flex flex-col">
+                                <h2 class="text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-[#ACBFA4] opacity-60">Analytical Stream</h2>
+                                <span class="text-[9px] md:text-[10px] text-[#A3E635] font-bold mt-0.5 tracking-wide">Velocity Index: 1.28x</span>
+                            </div>
+                            <div class="flex gap-2 items-center bg-[#A3E635]/10 px-2 md:px-3 py-1 md:py-1.5 rounded-full border border-[#A3E635]/20">
+                                <span class="w-1.5 h-1.5 rounded-full bg-[#A3E635] animate-pulse"></span>
+                                <span class="text-[8px] md:text-[9px] text-[#A3E635] font-bold tracking-wider">REALTIME</span>
+                            </div>
+                        </div>
+
+                        <!-- Metric Pills -->
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-6 md:mb-8" id="graph-labels">
+                            <!-- Dynamic Labels -->
+                        </div>
+                        
+                        <div class="h-48 md:h-60 w-full relative group/graph">
+                            <!-- Y-Axis Markers -->
+                            <div class="absolute left-0 top-0 bottom-0 flex flex-col justify-between text-[8px] md:text-[9px] font-medium text-[#ACBFA4] opacity-40 py-1">
+                                <span>10M</span><span>5M</span><span>0</span>
+                            </div>
+
+                            <!-- Graph SVG -->
+                            <svg id="main-graph" class="w-full h-full overflow-visible ml-8 md:ml-10" viewBox="0 0 1000 300" preserveAspectRatio="none">
+                                <defs>
+                                    <linearGradient id="lineGradient" x1="0" y1="0" x2="1" y2="0">
+                                        <stop offset="0%" stop-color="#A3E635" />
+                                        <stop offset="100%" stop-color="#ACBFA4" />
+                                    </linearGradient>
+                                    <linearGradient id="fillGradient" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="#A3E635" />
+                                        <stop offset="100%" stop-color="transparent" />
+                                    </linearGradient>
+                                </defs>
+                                
+                                <!-- Guide Lines -->
+                                <line x1="0" y1="0" x2="1000" y2="0" stroke="rgba(226, 232, 206, 0.05)" stroke-width="1" />
+                                <line x1="0" y1="150" x2="1000" y2="150" stroke="rgba(226, 232, 206, 0.05)" stroke-width="1" />
+                                <line x1="0" y1="300" x2="1000" y2="300" stroke="rgba(226, 232, 206, 0.05)" stroke-width="1" />
+
+                                <path id="graph-fill" class="fill-path" d="" fill="url(#fillGradient)" />
+                                <path id="graph-line" class="line-path" d="" stroke="url(#lineGradient)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+                                
+                                <!-- Probe -->
+                                <line id="probe-line" x1="0" y1="0" x2="0" y2="300" stroke="rgba(163, 230, 53, 0.5)" stroke-width="2" stroke-dasharray="4,4" class="opacity-0 group-hover/graph:opacity-100" />
+                                <circle id="probe-dot" cx="0" cy="0" r="6" fill="#A3E635" class="opacity-0 group-hover/graph:opacity-100 shadow-[0_0_15px_#A3E635]" />
+                                
+                                <g id="data-points"></g>
+                            </svg>
+
+                            <!-- X-Axis -->
+                            <div id="date-axis" class="flex justify-between ml-8 md:ml-10 mt-2 md:mt-4 text-[8px] md:text-[9px] text-[#ACBFA4] font-semibold tracking-wider opacity-60"></div>
+                        </div>
+
+                        <div class="mt-4 md:mt-6 pt-3 md:pt-4 border-t border-white/5 flex justify-between items-center text-[8px] md:text-[9px] text-[#ACBFA4] opacity-40 font-medium tracking-widest uppercase">
+                            <span>Graphical representation</span>
+                            <span>© 2026 BRAND पे SYSTEM</span>
+                        </div>
+                    </div>
+
+                    <!-- AI Summary Column -->
+                    <div class="glass-card flex-[0.4] p-5 md:p-6 flex flex-col min-h-[300px] md:min-h-[350px]">
+                        <div class="flex items-center justify-between mb-4 md:mb-6">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-[#A3E635]/10 flex items-center justify-center text-[#A3E635] border border-[#A3E635]/20 shadow-[0_0_20px_rgba(163,230,53,0.1)]">
+                                    <i data-lucide="sparkles" class="w-4 h-4 md:w-5 md:h-5"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-sm md:text-base font-bold text-[#E2E8CE]">Gemini Insights</h3>
+                                    <p class="text-[9px] md:text-[10px] uppercase tracking-widest text-[#ACBFA4] opacity-60 font-semibold">AI Summary Engine</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="ai-content" class="flex-1 text-[#E2E8CE] text-xs leading-6 overflow-y-auto custom-scrollbar mb-4 md:mb-6 pr-2">
+                            <div class="opacity-40 flex flex-col items-center justify-center h-full text-center gap-3">
+                                <i data-lucide="terminal" class="w-8 h-8 md:w-8 md:h-8"></i>
+                                <p class="font-medium px-4">Select a platform and tap below for AI analysis.</p>
+                            </div>
+                        </div>
+
+                        <button id="ai-trigger" onclick="generateAiSummary()" class="w-full bg-[#A3E635] text-[#0d0d0d] font-bold py-3 md:py-3.5 rounded-xl shadow-lg active:scale-95 transition-all hover:bg-[#bef264] flex items-center justify-center gap-2 group">
+                            <span id="ai-btn-text" class="uppercase tracking-widest text-[10px]">AI do your thing</span>
+                            <i data-lucide="wand-2" class="w-4 h-4 group-hover:rotate-12 transition-transform" id="ai-btn-icon"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Top Comments Section -->
+                <div class="glass-card overflow-hidden">
+                    <div class="p-5 md:p-6 border-b border-white/5 flex justify-between items-center bg-white/2">
+                        <h3 class="text-sm md:text-base font-bold text-[#E2E8CE] tracking-wide uppercase">Top comments</h3>
+                        <div class="flex gap-2">
+                            <span class="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-[#A3E635]"></span>
+                            <span class="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-[#ACBFA4] opacity-30"></span>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left min-w-[600px] md:min-w-0">
+                            <thead>
+                                <tr class="text-[9px] md:text-[10px] text-[#ACBFA4] border-b border-white/5 font-bold uppercase tracking-wider bg-[#0d0d0d]/40">
+                                    <th class="px-4 md:px-6 py-3 md:py-4">Platform</th>
+                                    <th class="px-4 md:px-6 py-3 md:py-4">Top Comment Content</th>
+                                    <th class="px-4 md:px-6 py-3 md:py-4 text-center">Interactions</th>
+                                    <th class="px-4 md:px-6 py-3 md:py-4 text-right">Sentiment</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-xs font-medium" id="table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        const apiKey = ""; 
+        let activePlatformKey = 'total';
+        let currentGraphPoints = [];
+
+        // Login Logic
+        function selectLang(btn) {
+            // Functionality removed as select element handles this now, keeping for reference if needed
+        }
+
+        function toggleContactModal() {
+            const modal = document.getElementById('contact-modal');
+            if (modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            } else {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        function handleLogin() {
+            const loginContainer = document.getElementById('login-container');
+            const dashboardContainer = document.getElementById('dashboard-container');
+            
+            // Update Profile based on input
+            const emailInput = document.getElementById('login-email');
+            const profileName = document.getElementById('user-profile-name');
+            const profileInitials = document.getElementById('user-profile-initials');
+
+            if (emailInput && emailInput.value.trim() !== "") {
+                let username = emailInput.value.trim();
+                // If email, take the part before @
+                if (username.includes('@')) {
+                    username = username.split('@')[0];
+                }
+                
+                profileName.textContent = username;
+                // Generate simple initials (first 2 chars)
+                profileInitials.textContent = username.substring(0, 2).toUpperCase();
+            }
+
+            // Trigger exit animation for login
+            loginContainer.classList.add('fade-out-up');
+            
+            // Wait slightly then trigger entrance for dashboard
+            setTimeout(() => {
+                dashboardContainer.classList.remove('hidden-state');
+                dashboardContainer.classList.add('fade-in-up');
+            }, 300);
+        }
+
+        // --- Data & Dashboard Logic ---
+
+        const tableData = [
+            { platform: 'Instagram', comment: "This aesthetic is exactly what we needed for the 2026 rebrand!", engagement: '1.2K Likes', sentiment: 'Positive' },
+            { platform: 'Instagram', comment: "Can we get a tutorial on how you made this?", engagement: '890 Likes', sentiment: 'Positive' },
+            { platform: 'YouTube', comment: "Best breakdown of the UI velocity system I've seen so far.", engagement: '842 Likes', sentiment: 'Highly Positive' },
+            { platform: 'YouTube', comment: "Audio levels were a bit low on this one.", engagement: '120 Likes', sentiment: 'Negative' },
+            { platform: 'X', comment: "The node sync logic seems a bit complex, but results speak for themselves.", engagement: '412 Reposts', sentiment: 'Neutral' },
+            { platform: 'X', comment: "Shipping this feature next week? 🚀", engagement: '205 Likes', sentiment: 'Positive' },
+            { platform: 'Facebook', comment: "Great community outreach, loving the transparency on metrics.", engagement: '214 Hearts', sentiment: 'Positive' },
+            { platform: 'Facebook', comment: "When is the next webinar?", engagement: '56 Likes', sentiment: 'Neutral' }
+        ];
+
+        const platformData = {
+            total: {
+                title: "Total Audience",
+                kpis: [
+                    { label: "Aggregate Views", value: "24.6M", icon: "eye", color: "#A3E635" },
+                    { label: "Total Engagement", value: "4.2M", icon: "zap", color: "#ACBFA4" },
+                    { label: "Combined Followers", value: "1.52M", icon: "users", color: "#E2E8CE" },
+                    { label: "Popular City", value: "Mumbai, IN", icon: "map-pin", color: "#A3E635" }
+                ],
+                labels: [
+                    { title: "Top Performance", value: "#UIFuturism (YT)", icon: "star" },
+                    { title: "Engagement Pool", value: "4.2M Actions", icon: "activity" },
+                    { title: "Trending in Sector", value: "Dark UI, Glass", isTrend: true, icon: "trending-up" },
+                    { title: "Global Reach", value: "3.2M Potential", icon: "globe" }
+                ],
+                path: "M0 250 L100 200 L200 230 L300 150 L400 180 L500 80 L600 120 L700 40 L800 90 L900 60 L1000 70",
+                points: [3, 5, 7, 10] 
+            },
+            instagram: {
+                title: "Instagram Analytics",
+                kpis: [
+                    { label: "Total Views", value: "8.4M", icon: "film", color: "#A3E635" },
+                    { label: "Total Likes", value: "450K", icon: "heart", color: "#ACBFA4" },
+                    { label: "Followers", value: "1.2M", icon: "users", color: "#E2E8CE" },
+                    { label: "IG Engagement", value: "5.2%", icon: "activity", color: "#A3E635" }
+                ],
+                labels: [
+                    { title: "Best IG Reel", value: "Glass Design 101", icon: "camera" },
+                    { title: "Bio Link Reach", value: "24K Monthly", icon: "send" },
+                    { title: "Trending Audio", value: "Futuristic Synth", icon: "music" },
+                    { title: "City Hotspot", value: "Delhi, IN", icon: "map-pin" }
+                ],
+                path: "M0 150 L100 140 L200 160 L300 100 L400 120 L500 40 L600 90 L700 20 L800 60 L900 100 L1000 80",
+                points: [3, 5, 7]
+            },
+            youtube: {
+                title: "YouTube Stats",
+                kpis: [
+                    { label: "Subscribers", value: "240K", icon: "users", color: "#A3E635" },
+                    { label: "Total Likes", value: "1.2M", icon: "thumbs-up", color: "#ACBFA4" },
+                    { label: "Total Comments", value: "12K", icon: "message-circle", color: "#E2E8CE" },
+                    { label: "Total Views", value: "12.4M", icon: "play", color: "#A3E635" }
+                ],
+                labels: [
+                    { title: "Best Video", value: "Responsive Grids", icon: "video" },
+                    { title: "Watch Duration", value: "8m 42s Avg", icon: "clock" },
+                    { title: "Search Anchor", value: "Brand पे Guide", icon: "search" },
+                    { title: "Popular City", value: "Bangalore, IN", icon: "map-pin" }
+                ],
+                path: "M0 200 L150 180 L300 190 L450 100 L600 110 L750 30 L900 45 L1000 20",
+                points: [3, 5, 7]
+            },
+            facebook: {
+                title: "Facebook Insights",
+                kpis: [
+                    { label: "Page Likes", value: "98K", icon: "thumbs-up", color: "#A3E635" },
+                    { label: "Followers", value: "112K", icon: "users", color: "#ACBFA4" },
+                    { label: "Page Reach", value: "2.1M", icon: "radio", color: "#E2E8CE" },
+                    { label: "Post Engagement", value: "3.8%", icon: "share-2", color: "#A3E635" }
+                ],
+                labels: [
+                    { title: "Active Groups", value: "Design Pro Hub", icon: "users" },
+                    { title: "Daily Visits", value: "24K Stream", icon: "eye" },
+                    { title: "Keywords", value: "Creative, Tech", icon: "hash" },
+                    { title: "Primary City", value: "Pune, IN", icon: "map-pin" }
+                ],
+                path: "M0 280 L200 260 L400 270 L600 150 L800 180 L1000 120",
+                points: [3, 5]
+            },
+            x: {
+                title: "X Platform Data",
+                kpis: [
+                    { label: "Followers", value: "45K", icon: "users", color: "#A3E635" },
+                    { label: "Total Reposts", value: "8.2K", icon: "repeat", color: "#ACBFA4" },
+                    { label: "Total Likes", value: "22K", icon: "heart", color: "#E2E8CE" },
+                    { label: "Impressions", value: "1.4M", icon: "zap", color: "#A3E635" }
+                ],
+                labels: [
+                    { title: "Tweet Velocity", value: "4.2/day Peak", icon: "activity" },
+                    { title: "X Trending", value: "#FintechDesign", icon: "hash" },
+                    { title: "Sentiment", value: "82% Positive", icon: "smile" },
+                    { title: "Top Locality", value: "Chennai, IN", icon: "map-pin" }
+                ],
+                path: "M0 220 L100 240 L200 150 L300 170 L400 100 L500 120 L600 20 L700 60 L800 30 L900 10 L1000 50",
+                points: [2, 4, 6, 8]
+            }
+        };
+
+        function getGraphCoordinates(pathString) {
+            const points = [];
+            const coords = pathString.split(/[ML\s]+/).filter(Boolean);
+            for (let i = 0; i < coords.length; i += 2) {
+                points.push({ x: parseFloat(coords[i]), y: parseFloat(coords[i+1]) });
+            }
+            return points;
+        }
+
+        function getYForX(points, x) {
+            for (let i = 0; i < points.length - 1; i++) {
+                const p1 = points[i];
+                const p2 = points[i+1];
+                if (x >= p1.x && x <= p2.x) {
+                    const t = (x - p1.x) / (p2.x - p1.x);
+                    return p1.y + t * (p2.y - p1.y);
+                }
+            }
+            return points[points.length - 1].y; 
+        }
+
+        function switchPlatform(platform) {
+            activePlatformKey = platform;
+            const data = platformData[platform];
+            currentGraphPoints = getGraphCoordinates(data.path);
+
+            const titleEl = document.getElementById('view-title');
+            const kpiContainer = document.getElementById('kpi-container');
+            const labelContainer = document.getElementById('graph-labels');
+            const aiContent = document.getElementById('ai-content');
+
+            [titleEl, kpiContainer, labelContainer].forEach(el => {
+                el.classList.remove('animate-switch');
+                void el.offsetWidth;
+                el.classList.add('animate-switch');
+            });
+
+            aiContent.innerHTML = `
+                <div class="opacity-30 flex flex-col items-center justify-center h-full text-center gap-3">
+                    <i data-lucide="terminal" class="w-8 h-8"></i>
+                    <p>Context updated. Trigger AI for ${data.title} synthesis.</p>
+                </div>
+            `;
+            
+            titleEl.textContent = data.title;
+            document.querySelectorAll('.platform-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`btn-${platform}`).classList.add('active');
+
+            // Reset Search
+            const searchInput = document.getElementById('global-search');
+            if(searchInput) {
+                searchInput.value = '';
+            }
+
+            // Render KPIs
+            kpiContainer.innerHTML = data.kpis.map(kpi => `
+                <div class="glass-card p-4 md:p-5 group">
+                    <div class="flex justify-between items-start mb-3 md:mb-4">
+                        <div class="w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl bg-white/5 flex items-center justify-center border border-white/10 group-hover:border-[#A3E635]/20 transition-all" style="color: ${kpi.color}">
+                            <i data-lucide="${kpi.icon}" class="w-4 h-4 md:w-5 md:h-5"></i>
+                        </div>
+                    </div>
+                    <p class="text-[#ACBFA4] text-[9px] md:text-[10px] font-bold uppercase tracking-widest mb-1 opacity-60">${kpi.label}</p>
+                    <h3 class="text-xl md:text-2xl font-bold tracking-tight text-[#E2E8CE] glow-text">${kpi.value}</h3>
+                </div>
+            `).join('');
+
+            // Render Graph Labels
+            labelContainer.innerHTML = data.labels.map(label => {
+                let valContent = `<span class="font-bold text-white text-xs tracking-tight">${label.value}</span>`;
+                if (label.isTrend) {
+                    valContent = `<a href="https://trends.google.com/trends/explore?q=${encodeURIComponent(label.value)}" target="_blank" class="font-bold text-[#A3E635] text-xs hover:underline underline-offset-4 flex items-center gap-1">
+                                    ${label.value} <i data-lucide="external-link" class="w-3 h-3"></i>
+                                  </a>`;
+                }
+                return `
+                <div class="flex flex-col bg-white/5 p-2 md:p-3 rounded-lg md:rounded-xl border border-white/5 hover:border-white/10 transition-colors">
+                    <div class="flex items-center gap-1.5 md:gap-2 opacity-40 mb-1">
+                        <i data-lucide="${label.icon}" class="w-3 h-3 text-[#ACBFA4]"></i>
+                        <span class="text-[9px] md:text-[10px] tracking-widest font-bold uppercase">${label.title}</span>
+                    </div>
+                    ${valContent}
+                </div>
+            `}).join('');
+
+            // Render Graph
+            const graphLine = document.getElementById('graph-line');
+            const graphFill = document.getElementById('graph-fill');
+            const fillPath = data.path + " L1000 300 L0 300 Z";
+            graphLine.setAttribute('d', data.path);
+            graphFill.setAttribute('d', fillPath);
+
+            const pointsContainer = document.getElementById('data-points');
+            pointsContainer.innerHTML = '';
+            
+            currentGraphPoints.forEach((pt, idx) => {
+                if (idx > 0 && idx < currentGraphPoints.length - 1) { 
+                     pointsContainer.innerHTML += `<circle cx="${pt.x}" cy="${pt.y}" r="3" fill="#A3E635"><animate attributeName="r" values="3;5;3" dur="3s" repeatCount="indefinite" /></circle>`;
+                }
+            });
+
+            // Render Table (Filtered by Platform)
+            const tableBody = document.getElementById('table-body');
+            let filteredTableData = tableData;
+            
+            if (platform !== 'total') {
+                filteredTableData = tableData.filter(row => {
+                    const p = row.platform.toLowerCase();
+                    return p === platform || (platform === 'x' && p === 'twitter');
+                });
+            }
+
+            if (filteredTableData.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="4" class="px-6 py-8 text-center text-[#ACBFA4] opacity-50 italic">No specific comments recorded for this view.</td></tr>`;
+            } else {
+                tableBody.innerHTML = filteredTableData.map(row => `
+                    <tr class="border-b border-white/5 hover:bg-white/2 transition-all text-[#E2E8CE]">
+                        <td class="px-4 md:px-6 py-3 font-bold text-xs flex items-center gap-2 whitespace-nowrap">
+                            <i data-lucide="${row.platform.toLowerCase()}" class="w-3.5 h-3.5 text-[#A3E635]"></i>
+                            ${row.platform}
+                        </td>
+                        <td class="px-4 md:px-6 py-3 text-[#ACBFA4] text-xs font-medium italic min-w-[200px]">"${row.comment}"</td>
+                        <td class="px-4 md:px-6 py-3 text-center text-xs font-bold text-[#A3E635] whitespace-nowrap">${row.engagement}</td>
+                        <td class="px-4 md:px-6 py-3 text-right whitespace-nowrap">
+                            <span class="px-3 py-1 bg-${row.sentiment === 'Neutral' ? 'blue-500/10 text-blue-400 border-blue-500/20' : 'A3E635/10 text-[#A3E635] border-[#A3E635]/20'} rounded-lg text-[10px] font-bold border uppercase tracking-wider">${row.sentiment}</span>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+
+            lucide.createIcons();
+            
+            graphLine.style.animation = 'none';
+            graphLine.offsetHeight; 
+            graphLine.style.animation = null;
+        }
+
+        async function callGemini(prompt, retryCount = 0) {
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${AIzaSyAt7X-C80hfFe6t7qVAiCDjmjylTd7LPRU}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: "System Instruction: You are an expert social media analyst. Summarize the data provided into concise, bulleted insights. Use professional language. Focus on actionable growth outcomes.\n\nUser Query: " + prompt }] }]
+                    })
+                });
+                
+                if (!response.ok) throw new Error(`API failed: ${response.status}`);
+                const result = await response.json();
+                return result.candidates?.[0]?.content?.parts?.[0]?.text;
+            } catch (error) {
+                if (retryCount < 5) {
+                    const delay = Math.pow(2, retryCount) * 1000;
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    return callGemini(prompt, retryCount + 1);
+                }
+                throw error;
+            }
+        }
+
+        async function generateAiSummary() {
+            const btn = document.getElementById('ai-trigger');
+            const content = document.getElementById('ai-content');
+            const btnText = document.getElementById('ai-btn-text');
+            const data = platformData[activePlatformKey];
+
+            btn.disabled = true;
+            btn.classList.add('opacity-50', 'cursor-not-allowed');
+            btnText.textContent = "AI SYNTHESIZING...";
+            content.innerHTML = '<div class="ai-pulse space-y-3"><div class="h-2 w-full bg-[#A3E635]/10 rounded"></div><div class="h-2 w-[85%] bg-[#A3E635]/10 rounded"></div><div class="h-2 w-[95%] bg-[#A3E635]/10 rounded"></div><div class="h-2 w-[70%] bg-[#A3E635]/10 rounded"></div></div>';
+
+            const metricsStr = data.kpis.map(k => `${k.label}: ${k.value}`).join(', ');
+            const trendsStr = data.labels.map(l => `${l.title}: ${l.value}`).join(', ');
+            const prompt = `Analyze these metrics for ${data.title}: ${metricsStr}. Key context: ${trendsStr}. Provide a 3-bullet point summary focusing on performance and one growth strategy recommendation.`;
+
+            try {
+                const summary = await callGemini(prompt);
+                if (!summary) throw new Error("No summary generated");
+                content.innerHTML = `<div class="animate-switch space-y-2">${summary.split('\n').filter(line => line.trim()).map(line => `<div class="flex gap-2 leading-relaxed"><span class="text-[#A3E635] mt-1">•</span><span>${line.replace(/^[*-]\s*/, '')}</span></div>`).join('')}</div>`;
+                lucide.createIcons();
+            } catch (error) {
+                content.innerHTML = `
+                    <div class="flex flex-col items-center justify-center gap-2 text-red-400 py-3 opacity-80">
+                        <i data-lucide="alert-triangle" class="w-5 h-5"></i>
+                        <p class="text-center font-bold uppercase tracking-widest text-[9px]">Communication_Link_Failure</p>
+                        <p class="text-[9px] text-center text-[#ACBFA4]">AI node is currently unresponsive. Check connection.</p>
+                    </div>
+                `;
+                lucide.createIcons();
+            } finally {
+                btn.disabled = false;
+                btn.classList.remove('opacity-50', 'cursor-not-allowed');
+                btnText.textContent = "AI DO YOUR THING";
+            }
+        }
+
+        const dateAxis = document.getElementById('date-axis');
+        const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+        let dateHTML = "";
+        for(let i=7; i>=0; i--) {
+            const d = new Date(); d.setDate(d.getDate() - i);
+            dateHTML += `<span>${d.getDate()} ${monthNames[d.getMonth()]}</span>`;
+        }
+        dateAxis.innerHTML = dateHTML;
+
+        // Interactive Graph Probe Logic
+        const graphViewport = document.getElementById('graph-viewport');
+        const probeLine = document.getElementById('probe-line');
+        const probeDot = document.getElementById('probe-dot');
+
+        graphViewport.addEventListener('mousemove', (e) => {
+            const rect = graphViewport.getBoundingClientRect();
+            // adjusting for SVG padding (ml-8 md:ml-10 = 32px or 40px)
+            const paddingLeft = window.innerWidth >= 768 ? 40 : 32; 
+            const x = e.clientX - rect.left - paddingLeft; 
+            
+            // Limit x to SVG width (0 to 1000 scaled)
+            // Ideally we need to map the pixel x to the SVG coordinate x (0-1000)
+            const svgEl = document.getElementById('main-graph');
+            const svgWidth = svgEl.getBoundingClientRect().width;
+            const scale = 1000 / svgWidth;
+            const svgX = x * scale;
+
+            if (svgX >= 0 && svgX <= 1000) {
+                // Find Y
+                const svgY = getYForX(currentGraphPoints, svgX);
+                
+                probeLine.setAttribute('x1', svgX);
+                probeLine.setAttribute('x2', svgX);
+                // Reset transform if any
+                probeLine.removeAttribute('transform'); 
+                
+                probeDot.setAttribute('cx', svgX);
+                probeDot.setAttribute('cy', svgY);
+            }
+        });
+
+        // Functional Search Logic
+        document.getElementById('global-search').addEventListener('input', function(e) {
+            const term = e.target.value.toLowerCase();
+            let hasResults = false;
+
+            // Filter KPIs
+            const kpis = document.querySelectorAll('#kpi-container > div');
+            kpis.forEach(kpi => {
+                const text = kpi.innerText.toLowerCase();
+                if (text.includes(term)) {
+                    kpi.style.display = '';
+                    hasResults = true;
+                } else {
+                    kpi.style.display = 'none';
+                }
+            });
+
+            // Filter Graph Labels
+            const labels = document.querySelectorAll('#graph-labels > div');
+            labels.forEach(label => {
+                const text = label.innerText.toLowerCase();
+                if (text.includes(term)) {
+                    label.style.display = '';
+                    hasResults = true;
+                } else {
+                    label.style.display = 'none';
+                }
+            });
+
+            // Filter Table
+            const rows = document.querySelectorAll('#table-body tr');
+            rows.forEach(row => {
+                const text = row.innerText.toLowerCase();
+                if (text.includes(term)) {
+                    row.style.display = '';
+                    hasResults = true;
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            // Handle "Oops" State
+            let noRes = document.getElementById('no-results-state');
+            if (!hasResults && term !== '') {
+                if (!noRes) {
+                    noRes = document.createElement('div');
+                    noRes.id = 'no-results-state';
+                    // Changed pointer-events-none to cursor-pointer so it captures clicks
+                    noRes.className = 'absolute inset-0 flex flex-col items-center justify-center bg-[#0d0d0d]/80 backdrop-blur-sm z-50 animate-switch cursor-pointer';
+                    noRes.innerHTML = `
+                        <div class="glass-card p-8 flex flex-col items-center text-center max-w-xs border-[#A3E635]/20">
+                            <span class="text-5xl mb-4 filter drop-shadow-[0_0_15px_rgba(163,230,53,0.4)]">🫣</span>
+                            <h3 class="text-xl font-bold text-[#E2E8CE] mb-2 glow-text">Oops!</h3>
+                            <p class="text-xs text-[#ACBFA4] font-mono leading-relaxed">We searched the entire matrix and found... absolutely nothing. Tap anywhere to reset.</p>
+                        </div>
+                    `;
+                    
+                    // Add click handler to clear search
+                    noRes.addEventListener('click', function() {
+                        const searchInput = document.getElementById('global-search');
+                        searchInput.value = '';
+                        searchInput.dispatchEvent(new Event('input')); // Trigger input event to reset view
+                    });
+
+                    document.querySelector('main').appendChild(noRes);
+                } else {
+                    noRes.style.display = 'flex';
+                }
+            } else {
+                if (noRes) noRes.style.display = 'none';
+            }
+        });
+
+        // Interactive Grid Logic
+        const canvas = document.getElementById('interactive-grid');
+        const ctx = canvas.getContext('2d');
+        let points = [];
+        let mouse = { x: -1000, y: -1000 };
+        const gap = 75;
+
+        function init() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            points = [];
+            for (let x = 0; x < canvas.width; x += gap) {
+                for (let y = 0; y < canvas.height; y += gap) {
+                    points.push({ x, y, originalX: x, originalY: y });
+                }
+            }
+        }
+        window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
+        window.addEventListener('resize', init);
+
+        function animateGrid() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            points.forEach(p => {
+                const dx = mouse.x - p.originalX, dy = mouse.y - p.originalY;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                const maxDist = 200;
+                if (dist < maxDist) {
+                    const angle = Math.atan2(dy, dx), force = (maxDist - dist) / maxDist;
+                    p.x = p.originalX + Math.cos(angle) * force * 15;
+                    p.y = p.originalY + Math.sin(angle) * force * 15;
+                    ctx.fillStyle = `rgba(163, 230, 53, ${0.1 + force * 0.2})`;
+                } else {
+                    p.x += (p.originalX - p.x) * 0.1; p.y += (p.originalY - p.y) * 0.1;
+                    ctx.fillStyle = 'rgba(172, 191, 164, 0.08)';
+                }
+                ctx.beginPath(); ctx.arc(p.x, p.y, 1, 0, Math.PI * 2); ctx.fill();
+            });
+            requestAnimationFrame(animateGrid);
+        }
+        init(); animateGrid();
+    </script>
 </body>
 </html>
