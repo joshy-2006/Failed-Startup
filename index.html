@@ -3,99 +3,534 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DevRays Owner App</title>
-    <!-- Tailwind CSS -->
+    <title>Brand पे Analytics</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        body { font-family: 'Poppins', sans-serif; background-color: #f3f4f6; }
-        .card-shadow { box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        /* Professional Helvetica-inspired font stack */
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --primary: #A3E635;
+            --secondary: #ACBFA4;
+            --cream: #E2E8CE;
+            --bg-dark: #0d0d0d;
+            --card-bg: rgba(22, 22, 22, 0.7);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--cream);
+            overflow: hidden;
+        }
+
+        /* Bouncy Background Elements */
+        .bg-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            background: var(--bg-dark);
+        }
+
+        .blob {
+            position: absolute;
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, rgba(163, 230, 53, 0.08) 0%, rgba(0, 0, 0, 0) 70%);
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: bounce 25s infinite alternate ease-in-out;
+        }
+
+        .blob-2 {
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(172, 191, 164, 0.06) 0%, rgba(0, 0, 0, 0) 70%);
+            left: 65%;
+            top: 25%;
+            animation-duration: 30s;
+            animation-delay: -7s;
+        }
+
+        /* Sophisticated Glassmorphism */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 206, 0.06);
+            border-radius: 20px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(163, 230, 53, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .tech-font {
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .glow-text {
+            text-shadow: 0 0 10px rgba(163, 230, 53, 0.15);
+        }
+
+        /* Ribbon Styling */
+        .ribbon-wrapper {
+            background: rgba(163, 230, 53, 0.03);
+            border-y: 1px solid rgba(163, 230, 53, 0.05);
+            height: 44px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .ribbon-content {
+            display: flex;
+            white-space: nowrap;
+            animation: scroll 45s linear infinite;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        @keyframes drawLine {
+            to { stroke-dashoffset: 0; }
+        }
+
+        .line-path {
+            stroke-dasharray: 2000;
+            stroke-dashoffset: 2000;
+            animation: drawLine 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            transition: d 0.8s ease;
+        }
+
+        .fill-path {
+            opacity: 0;
+            animation: fadeIn 1.5s ease 1s forwards;
+            transition: d 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 0.1; }
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 5px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(163, 230, 53, 0.1);
+            border-radius: 10px;
+        }
+
+        .platform-btn.active {
+            background-color: var(--primary);
+            color: #0d0d0d;
+            box-shadow: 0 0 15px rgba(163, 230, 53, 0.2);
+        }
+
+        @keyframes bounce {
+            0% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(4vw, 6vh) scale(1.03); }
+            100% { transform: translate(-2vw, -3vh) scale(1); }
+        }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center bg-gray-100">
+<body class="flex h-screen font-medium text-sm">
 
-    <!-- Mobile App Container -->
-    <div class="w-full max-w-md bg-white min-h-screen relative shadow-2xl overflow-hidden flex flex-col">
-        
-        <!-- Header -->
-        <header class="bg-gray-900 text-white p-6 rounded-b-3xl shadow-lg z-10">
-            <div class="flex justify-between items-center mb-2">
-                <div>
-                    <p class="text-gray-400 text-sm">Welcome back,</p>
-                    <h1 class="text-2xl font-bold">DevRays Solar</h1>
-                </div>
-                <div class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center">
-                    <i class="fa-solid fa-user text-gray-300"></i>
-                </div>
-            </div>
-            <p class="text-sm opacity-80 mt-2"><i class="fa-solid fa-calendar-day mr-2"></i>Today's Business</p>
-        </header>
-
-        <!-- Main Content Area -->
-        <div class="flex-1 p-6 space-y-4">
-            
-            <!-- Row 1: Calls & WhatsApp -->
-            <div class="grid grid-cols-2 gap-4">
-                <!-- Calls Card -->
-                <div class="bg-blue-50 p-5 rounded-2xl border border-blue-100 card-shadow flex flex-col items-center justify-center text-center">
-                    <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mb-2">
-                        <i class="fa-solid fa-phone text-xl"></i>
-                    </div>
-                    <h2 class="text-4xl font-bold text-gray-800">4</h2>
-                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mt-1">Calls Today</p>
-                </div>
-
-                <!-- WhatsApp Card -->
-                <div class="bg-green-50 p-5 rounded-2xl border border-green-100 card-shadow flex flex-col items-center justify-center text-center">
-                    <div class="w-10 h-10 bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-2">
-                        <i class="fa-brands fa-whatsapp text-xl"></i>
-                    </div>
-                    <h2 class="text-4xl font-bold text-gray-800">7</h2>
-                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mt-1">Enquiries</p>
-                </div>
-            </div>
-
-            <!-- Row 2: Area & Ad Spend -->
-            <div class="grid grid-cols-1 gap-4">
-                <!-- Area Card -->
-                <div class="bg-white p-5 rounded-2xl border border-gray-100 card-shadow flex items-center gap-4">
-                    <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center shrink-0">
-                        <i class="fa-solid fa-location-dot text-xl"></i>
-                    </div>
-                    <div>
-                        <p class="text-gray-400 text-xs font-bold uppercase">Area Reached</p>
-                        <h3 class="text-lg font-bold text-gray-800">Nashik + 15 km</h3>
-                    </div>
-                </div>
-
-                <!-- Ad Spend Card -->
-                <div class="bg-white p-5 rounded-2xl border border-gray-100 card-shadow flex items-center gap-4">
-                    <div class="w-12 h-12 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center shrink-0">
-                        <i class="fa-solid fa-indian-rupee-sign text-xl"></i>
-                    </div>
-                    <div>
-                        <p class="text-gray-400 text-xs font-bold uppercase">Ad Spend Today</p>
-                        <h3 class="text-lg font-bold text-gray-800">₹180</h3>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- THE BIG BUTTON (Footer) -->
-        <div class="p-6 mt-auto bg-white border-t border-gray-100">
-            <button onclick="alert('Going to Screen 2: Lead Mode')" class="w-full bg-yellow-500 hover:bg-yellow-600 text-black font-bold text-lg py-5 rounded-xl shadow-lg shadow-yellow-500/30 flex items-center justify-center gap-3 transition transform active:scale-95">
-                <i class="fa-solid fa-fire text-red-600 animate-pulse"></i>
-                GET MORE SOLAR LEADS
-            </button>
-            <p class="text-center text-xs text-gray-400 mt-3">DevRays Manager v1.0</p>
-        </div>
-
+    <div class="bg-container">
+        <canvas id="interactive-grid" class="absolute inset-0 opacity-25"></canvas>
+        <div class="blob" style="top: 10%; left: 5%;"></div>
+        <div class="blob blob-2"></div>
     </div>
 
+    <!-- Sidebar -->
+    <aside class="w-20 lg:w-64 border-r border-white/5 flex flex-col p-6 bg-[#0d0d0d]/60 backdrop-blur-2xl z-50">
+        <div class="mt-4 mb-14 px-2 text-center lg:text-left">
+            <span class="text-2xl font-bold tracking-tight text-[#E2E8CE] whitespace-nowrap glow-text">
+                Brand <span class="text-[#A3E635]">पे</span>
+            </span>
+        </div>
+
+        <nav class="flex-1 w-full space-y-2 overflow-y-auto custom-scrollbar pr-1">
+            <div class="px-4 mb-4 text-[10px] uppercase tracking-[0.3em] text-[#ACBFA4] font-black opacity-30 hidden lg:block">Dashboard</div>
+            
+            <button onclick="switchPlatform('total')" id="btn-total" class="platform-btn active w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all group">
+                <i data-lucide="layout-grid" class="w-5 h-5"></i>
+                <span class="font-bold hidden lg:block">Total Audience</span>
+            </button>
+            <button onclick="switchPlatform('instagram')" id="btn-instagram" class="platform-btn w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl text-zinc-400 hover:bg-white/5 hover:text-white transition-all group">
+                <i data-lucide="instagram" class="w-5 h-5"></i>
+                <span class="font-bold hidden lg:block">Instagram</span>
+            </button>
+            <button onclick="switchPlatform('youtube')" id="btn-youtube" class="platform-btn w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl text-zinc-400 hover:bg-white/5 hover:text-white transition-all group">
+                <i data-lucide="youtube" class="w-5 h-5"></i>
+                <span class="font-bold hidden lg:block">YouTube</span>
+            </button>
+            <button onclick="switchPlatform('facebook')" id="btn-facebook" class="platform-btn w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl text-zinc-400 hover:bg-white/5 hover:text-white transition-all group">
+                <i data-lucide="facebook" class="w-5 h-5"></i>
+                <span class="font-bold hidden lg:block">Facebook</span>
+            </button>
+            <button onclick="switchPlatform('x')" id="btn-x" class="platform-btn w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl text-zinc-400 hover:bg-white/5 hover:text-white transition-all group">
+                <i data-lucide="twitter" class="w-5 h-5"></i>
+                <span class="font-bold hidden lg:block">X (Twitter)</span>
+            </button>
+        </nav>
+
+        <div class="mt-auto pt-6 border-t border-white/5">
+            <div class="flex items-center gap-3 p-2.5 bg-white/5 rounded-2xl">
+                <div class="w-9 h-9 rounded-xl bg-[#E2E8CE] text-[#0d0d0d] flex items-center justify-center text-xs font-black">AR</div>
+                <div class="hidden lg:block">
+                    <p class="text-xs font-bold text-white">Alex Rivera</p>
+                    <p class="text-[9px] text-[#A3E635] font-bold tracking-widest uppercase opacity-70">Analytics_Pro</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col overflow-y-auto custom-scrollbar relative">
+        
+        <!-- Improved Header Spacing -->
+        <header class="h-28 border-b border-white/5 px-12 flex items-center justify-between sticky top-0 bg-[#0d0d0d]/50 backdrop-blur-2xl z-40">
+            <div class="flex flex-col gap-1">
+                <h1 id="view-title" class="text-3xl font-bold tracking-tight text-[#E2E8CE]">Total Audience</h1>
+                <p class="text-[10px] uppercase tracking-[0.3em] text-[#ACBFA4] opacity-50 font-bold">Performance Tracking System</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="hidden md:flex items-center bg-white/5 border border-white/10 rounded-full px-5 py-2.5 w-72 focus-within:border-[#A3E635]/40 transition-all">
+                    <i data-lucide="search" class="w-4 h-4 text-zinc-500 mr-2"></i>
+                    <input type="text" placeholder="Global search..." class="bg-transparent border-none outline-none text-xs w-full text-[#E2E8CE] font-medium">
+                </div>
+                <button class="w-11 h-11 rounded-2xl bg-[#A3E635] text-[#0d0d0d] flex items-center justify-center shadow-lg active:scale-95 hover:bg-[#bef264] transition-all">
+                    <i data-lucide="plus" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </header>
+
+        <div class="ribbon-wrapper">
+            <div class="ribbon-content text-[#A3E635]/40 font-bold uppercase">
+                <span class="flex items-center text-[10px] tracking-[0.3em]" id="ribbon-text">
+                    &nbsp; BRAND पे • ANALYTICS • LIVE INSIGHTS • SYSTEM OK • USER GROWTH • GLOBAL REACH • BRAND पे • ANALYTICS • LIVE INSIGHTS • SYSTEM OK
+                </span>
+            </div>
+        </div>
+
+        <!-- Main Workspace Padding -->
+        <div class="p-10 space-y-10">
+            
+            <!-- KPI Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6" id="kpi-container">
+                <!-- Dynamic KPIs injected here -->
+            </div>
+
+            <!-- Detailed Graph Area -->
+            <div class="glass-card p-10 overflow-hidden relative">
+                <div class="flex items-center justify-between mb-10">
+                    <h2 class="tech-font text-[10px] font-black uppercase tracking-[0.5em] text-[#ACBFA4] opacity-50">Analytical Stream</h2>
+                    <div class="flex gap-2 items-center bg-[#A3E635]/5 px-3 py-1.5 rounded-full border border-[#A3E635]/10">
+                        <span class="w-1.5 h-1.5 rounded-full bg-[#A3E635] animate-pulse"></span>
+                        <span class="tech-font text-[9px] text-[#A3E635] font-bold tracking-widest">LIVE_DATA_FEED</span>
+                    </div>
+                </div>
+
+                <!-- Callout Labels above Graph -->
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-12" id="graph-labels">
+                    <!-- Dynamic Detailed Labels from sketch -->
+                </div>
+                
+                <div class="h-80 w-full relative group/graph">
+                    <!-- Y-Axis Markers -->
+                    <div class="absolute left-0 top-0 bottom-0 flex flex-col justify-between text-[9px] tech-font text-[#ACBFA4] opacity-20 py-1">
+                        <span>100%</span><span>50%</span><span>0%</span>
+                    </div>
+
+                    <svg id="main-graph" class="w-full h-full overflow-visible ml-10" viewBox="0 0 1000 300" preserveAspectRatio="none">
+                        <defs>
+                            <linearGradient id="lineGradient" x1="0" y1="0" x2="1" y2="0">
+                                <stop offset="0%" stop-color="#A3E635" />
+                                <stop offset="100%" stop-color="#ACBFA4" />
+                            </linearGradient>
+                            <linearGradient id="fillGradient" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#A3E635" />
+                                <stop offset="100%" stop-color="transparent" />
+                            </linearGradient>
+                        </defs>
+                        
+                        <line x1="0" y1="0" x2="1000" y2="0" stroke="rgba(226, 232, 206, 0.05)" stroke-width="1" />
+                        <line x1="0" y1="150" x2="1000" y2="150" stroke="rgba(226, 232, 206, 0.05)" stroke-width="1" />
+                        <line x1="0" y1="300" x2="1000" y2="300" stroke="rgba(226, 232, 206, 0.05)" stroke-width="1" />
+
+                        <path id="graph-fill" class="fill-path" d="" fill="url(#fillGradient)" />
+                        <path id="graph-line" class="line-path" d="" stroke="url(#lineGradient)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+                        
+                        <g id="data-points"></g>
+                    </svg>
+
+                    <div id="date-axis" class="flex justify-between ml-10 mt-8 tech-font text-[9px] text-[#ACBFA4] uppercase tracking-[0.2em] font-bold opacity-40"></div>
+                </div>
+            </div>
+
+            <!-- Stability Footer -->
+            <div class="glass-card overflow-hidden">
+                <div class="p-8 border-b border-white/5 flex justify-between items-center bg-white/2">
+                    <h3 class="text-base font-bold text-[#E2E8CE] tracking-wide uppercase">Node Connectivity Matrix</h3>
+                    <div class="flex gap-2">
+                        <span class="w-2 h-2 rounded-full bg-[#A3E635]"></span>
+                        <span class="w-2 h-2 rounded-full bg-[#ACBFA4] opacity-30"></span>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="text-[9px] text-[#ACBFA4] border-b border-white/5 font-black uppercase tracking-[0.3em] bg-[#0d0d0d]/40">
+                                <th class="px-10 py-5">Node Identity</th>
+                                <th class="px-10 py-5">Active Metrics</th>
+                                <th class="px-10 py-5 text-center">Stability</th>
+                                <th class="px-10 py-5 text-right">Last Sync</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-xs font-bold" id="table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        lucide.createIcons();
+
+        const platformData = {
+            total: {
+                title: "Total Audience",
+                kpis: [
+                    { label: "Aggregate Views", value: "24.6M", icon: "eye", color: "#A3E635" },
+                    { label: "Total Engagement", value: "4.2M", icon: "zap", color: "#ACBFA4" },
+                    { label: "Combined Followers", value: "1.52M", icon: "users", color: "#E2E8CE" },
+                    { label: "Popular City", value: "Mumbai, IN", icon: "map-pin", color: "#A3E635" }
+                ],
+                labels: [
+                    { title: "Your Top Post", value: "#UIFuturism (YT)", icon: "star" },
+                    { title: "Engagement Pool", value: "4.2M Interactions", icon: "activity" },
+                    { title: "Trending in Sector", value: "Dark UI, Glass", isTrend: true, icon: "trending-up" },
+                    { title: "Global Reach", value: "3.2M Potential", icon: "globe" }
+                ],
+                path: "M0 250 L100 200 L200 230 L300 150 L400 180 L500 80 L600 120 L700 40 L800 90 L900 60 L1000 70",
+                points: [3, 5, 7, 10]
+            },
+            instagram: {
+                title: "Instagram Analytics",
+                kpis: [
+                    { label: "Total Views", value: "8.4M", icon: "film", color: "#A3E635" },
+                    { label: "Total Likes", value: "450K", icon: "heart", color: "#ACBFA4" },
+                    { label: "Followers", value: "1.2M", icon: "users", color: "#E2E8CE" },
+                    { label: "IG Engagement", value: "5.2%", icon: "activity", color: "#A3E635" }
+                ],
+                labels: [
+                    { title: "Best IG Reel", value: "Glass Design 101", icon: "camera" },
+                    { title: "Bio Link Reach", value: "24K Monthly", icon: "send" },
+                    { title: "Trending Audio", value: "Futuristic Synth", icon: "music" },
+                    { title: "City Hotspot", value: "Delhi, IN", icon: "map-pin" }
+                ],
+                path: "M0 150 L100 140 L200 160 L300 100 L400 120 L500 40 L600 90 L700 20 L800 60 L900 100 L1000 80",
+                points: [3, 5, 7]
+            },
+            youtube: {
+                title: "YouTube Stats",
+                kpis: [
+                    { label: "Subscribers", value: "240K", icon: "users", color: "#A3E635" },
+                    { label: "Total Likes", value: "1.2M", icon: "thumbs-up", color: "#ACBFA4" },
+                    { label: "Total Comments", value: "12K", icon: "message-circle", color: "#E2E8CE" },
+                    { label: "Total Views", value: "12.4M", icon: "play", color: "#A3E635" }
+                ],
+                labels: [
+                    { title: "Best Video", value: "Responsive Grids", icon: "video" },
+                    { title: "Watch Duration", value: "8m 42s Avg", icon: "clock" },
+                    { title: "Search Anchor", value: "Brand पे Guide", icon: "search" },
+                    { title: "Popular City", value: "Bangalore, IN", icon: "map-pin" }
+                ],
+                path: "M0 200 L150 180 L300 190 L450 100 L600 110 L750 30 L900 45 L1000 20",
+                points: [3, 5, 7]
+            },
+            facebook: {
+                title: "Facebook Insights",
+                kpis: [
+                    { label: "Page Likes", value: "98K", icon: "thumbs-up", color: "#A3E635" },
+                    { label: "Followers", value: "112K", icon: "users", color: "#ACBFA4" },
+                    { label: "Page Reach", value: "2.1M", icon: "radio", color: "#E2E8CE" },
+                    { label: "Post Engagement", value: "3.8%", icon: "share-2", color: "#A3E635" }
+                ],
+                labels: [
+                    { title: "Active Groups", value: "Design Pro Hub", icon: "users" },
+                    { title: "Daily Visits", value: "24K Stream", icon: "eye" },
+                    { title: "Keywords", value: "Creative, Tech", icon: "hash" },
+                    { title: "Primary City", value: "Pune, IN", icon: "map-pin" }
+                ],
+                path: "M0 280 L200 260 L400 270 L600 150 L800 180 L1000 120",
+                points: [3, 5]
+            },
+            x: {
+                title: "X Platform Data",
+                kpis: [
+                    { label: "Followers", value: "45K", icon: "users", color: "#A3E635" },
+                    { label: "Total Reposts", value: "8.2K", icon: "repeat", color: "#ACBFA4" },
+                    { label: "Total Likes", value: "22K", icon: "heart", color: "#E2E8CE" },
+                    { label: "Impressions", value: "1.4M", icon: "zap", color: "#A3E635" }
+                ],
+                labels: [
+                    { title: "Tweet Velocity", value: "4.2/day Peak", icon: "activity" },
+                    { title: "X Trending", value: "#FintechDesign", icon: "hash" },
+                    { title: "Sentiment", value: "82% Positive", icon: "smile" },
+                    { title: "Top Locality", value: "Chennai, IN", icon: "map-pin" }
+                ],
+                path: "M0 220 L100 240 L200 150 L300 170 L400 100 L500 120 L600 20 L700 60 L800 30 L900 10 L1000 50",
+                points: [2, 4, 6, 8]
+            }
+        };
+
+        function switchPlatform(platform) {
+            const data = platformData[platform];
+            document.getElementById('view-title').textContent = data.title;
+            document.querySelectorAll('.platform-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`btn-${platform}`).classList.add('active');
+
+            const kpiContainer = document.getElementById('kpi-container');
+            kpiContainer.innerHTML = data.kpis.map(kpi => `
+                <div class="glass-card p-6 group">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 group-hover:border-[#A3E635]/20 transition-all" style="color: ${kpi.color}">
+                            <i data-lucide="${kpi.icon}" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                    <p class="text-[#ACBFA4] text-[9px] font-black uppercase tracking-[0.2em] mb-1 opacity-50">${kpi.label}</p>
+                    <h3 class="tech-font text-3xl font-bold tracking-tighter text-[#E2E8CE] glow-text">${kpi.value}</h3>
+                </div>
+            `).join('');
+
+            const labelContainer = document.getElementById('graph-labels');
+            labelContainer.innerHTML = data.labels.map(label => {
+                let valContent = `<span class="font-bold text-white text-sm tracking-tight">${label.value}</span>`;
+                if (label.isTrend) {
+                    valContent = `<a href="https://trends.google.com/trends/explore?q=${encodeURIComponent(label.value)}" target="_blank" class="font-bold text-[#A3E635] text-sm hover:underline underline-offset-4 flex items-center gap-1">
+                                    ${label.value} <i data-lucide="external-link" class="w-3 h-3"></i>
+                                  </a>`;
+                }
+                return `
+                <div class="flex flex-col">
+                    <div class="flex items-center gap-1.5 opacity-30 mb-2">
+                        <i data-lucide="${label.icon}" class="w-3.5 h-3.5 text-[#ACBFA4]"></i>
+                        <span class="text-[8px] tracking-[0.2em] font-black uppercase">${label.title}</span>
+                    </div>
+                    ${valContent}
+                </div>
+            `}).join('');
+
+            const graphLine = document.getElementById('graph-line');
+            const graphFill = document.getElementById('graph-fill');
+            const fillPath = data.path + " L1000 300 L0 300 Z";
+            graphLine.setAttribute('d', data.path);
+            graphFill.setAttribute('d', fillPath);
+
+            const pointsContainer = document.getElementById('data-points');
+            pointsContainer.innerHTML = '';
+            const coords = data.path.split(/[LM ]+/).filter(Boolean);
+            data.points.forEach(idx => {
+                const cx = coords[idx * 2];
+                const cy = coords[idx * 2 + 1];
+                pointsContainer.innerHTML += `<circle cx="${cx}" cy="${cy}" r="3" fill="#A3E635"><animate attributeName="r" values="3;5;3" dur="3s" repeatCount="indefinite" /></circle>`;
+            });
+
+            lucide.createIcons();
+            graphLine.style.animation = 'none';
+            graphLine.offsetHeight;
+            graphLine.style.animation = null;
+        }
+
+        const dateAxis = document.getElementById('date-axis');
+        const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+        let dateHTML = "";
+        for (let i = 7; i >= 0; i--) {
+            const d = new Date();
+            d.setDate(d.getDate() - i);
+            dateHTML += `<span>${d.getDate()} ${monthNames[d.getMonth()]}</span>`;
+        }
+        dateAxis.innerHTML = dateHTML;
+
+        const tableBody = document.getElementById('table-body');
+        const tableData = [
+            { id: 'CORE_IG_SYNC', stream: 'Views, Likes, Comments', stability: '98%', status: 'Active' },
+            { id: 'NODE_YT_ALFA', stream: 'Subscribers, Comments', stability: '92%', status: 'Syncing' },
+            { id: 'FB_META_NODE', stream: 'Reach, Post Actions', stability: '99%', status: 'Active' },
+            { id: 'X_PULSE_ALPHA', stream: 'Reposts, Impressions', stability: '86%', status: 'Stable' }
+        ];
+        tableBody.innerHTML = tableData.map(row => `
+            <tr class="border-b border-white/5 hover:bg-white/2 transition-all text-[#E2E8CE]">
+                <td class="px-10 py-6 font-bold tech-font text-xs">#${row.id}</td>
+                <td class="px-10 py-6 text-[#ACBFA4] text-[10px] font-bold uppercase opacity-60">${row.stream}</td>
+                <td class="px-10 py-6 text-center tech-font text-xs font-black text-[#A3E635]">${row.stability}</td>
+                <td class="px-10 py-6 text-right">
+                    <span class="px-3.5 py-1.5 bg-${row.status === 'Syncing' ? 'blue-500/10 text-blue-400 border-blue-500/20' : 'A3E635/10 text-[#A3E635] border-[#A3E635]/20'} rounded-xl text-[9px] font-black border uppercase tracking-wider">${row.status}</span>
+                </td>
+            </tr>
+        `).join('');
+
+        switchPlatform('total');
+
+        const canvas = document.getElementById('interactive-grid');
+        const ctx = canvas.getContext('2d');
+        let points = [];
+        let mouse = { x: -1000, y: -1000 };
+        const gap = 70;
+
+        function init() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            points = [];
+            for (let x = 0; x < canvas.width; x += gap) {
+                for (let y = 0; y < canvas.height; y += gap) {
+                    points.push({ x, y, originalX: x, originalY: y });
+                }
+            }
+        }
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+        window.addEventListener('resize', init);
+
+        function animateGrid() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            points.forEach(p => {
+                const dx = mouse.x - p.originalX;
+                const dy = mouse.y - p.originalY;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                const maxDist = 200;
+                if (dist < maxDist) {
+                    const angle = Math.atan2(dy, dx);
+                    const force = (maxDist - dist) / maxDist;
+                    p.x = p.originalX + Math.cos(angle) * force * 15;
+                    p.y = p.originalY + Math.sin(angle) * force * 15;
+                    ctx.fillStyle = `rgba(163, 230, 53, ${0.1 + force * 0.15})`;
+                } else {
+                    p.x += (p.originalX - p.x) * 0.1;
+                    p.y += (p.originalY - p.y) * 0.1;
+                    ctx.fillStyle = 'rgba(172, 191, 164, 0.08)';
+                }
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, 1, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            requestAnimationFrame(animateGrid);
+        }
+        init();
+        animateGrid();
+    </script>
 </body>
 </html>
